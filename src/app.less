@@ -1,0 +1,46 @@
+@import "theme/variables.less";
+@import "../node_modules/bootstrap/less/mixins/buttons.less";
+
+
+* {
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: auto;
+}
+
+.page-host {
+  position: relative;
+  height: inherit;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.splash {
+  display: none;
+}
+
+.flex {
+  display: flex;
+  display: -webkit-flex;
+  flex-grow: 1;
+  align-self: stretch;
+}
+
+.flex-col {
+  display: flex;
+  display: -webkit-flex;
+  flex: 1 100%;
+  flex-flow: column nowrap;
+}
+
+.flex-down {
+  display: flex;
+  -webkit-flex: 2;
+  flex: 2;
+}

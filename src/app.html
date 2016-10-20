@@ -1,3 +1,11 @@
 <template>
-  <h1>${message}</h1>
+  <require from="resources/elements/loading-indicator"></require>
+
+  <require from="theme/bootstrap.css"></require>
+  <require from="app.css"></require>
+
+  <div class="page-host">
+    <loading-indicator loading.bind="router.isNavigating"></loading-indicator>
+    <router-view></router-view>
+  </div>
 </template>
