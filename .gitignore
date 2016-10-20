@@ -373,3 +373,4 @@ typings/
 scripts/app-bundle.js
 scripts/app-bundle.js.map
 scripts/vendor-bundle.js
+scripts/dep-bundle.js

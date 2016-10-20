@@ -8,7 +8,6 @@ const logger = LogManager.getLogger('stamp-web');
 export class App {
 
   constructor(private router: Router, private i18n: I18N) {
-
   }
 
   configureRouter(config: RouterConfiguration, router: Router) {

@@ -3,7 +3,7 @@ import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 
 @inject(EventAggregator)
 export class EventManaged {
-  _subscribers: Array<Subscription> = [];
+  _subscribers: Array<Subscription[]> = [];
 
   constructor (private eventBus: EventAggregator) {
 
@@ -19,7 +19,7 @@ export class EventManaged {
       this._subscribers[event] = [];
     }
 
-    this._subscribers[event].push(this.eventBus.subscribe(event, handler));
+    this._subscribers[event].push( this.eventBus.subscribe(event, handler));
   }
 
   unsubscribe(event) {
@@ -38,7 +38,8 @@ export class EventManaged {
  * List of events
  */
 export const EventNames = {
-  loadingStarted: Symbol()
+  loadingStarted: 'loadingStarted',
+  loadingFinished: 'loadingFinished'
 };
 
 /**

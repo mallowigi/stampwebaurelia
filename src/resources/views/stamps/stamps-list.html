@@ -6,14 +6,20 @@
       <div class="btn-toolbar">
         <div class="btn-group">
           <button type="button" class="btn btn-sm btn-default"
-                  >
+                  title="${'nav.new-stamp' | t}"
+                  click.trigger="showEditor('create-stamp')">
             <span class="sw-icon-plus"></span>
           </button>
-          <button class="btn btn-sm btn-default">
+
+          <button class="btn btn-sm btn-default"
+                  title="${'nav.search'|t}"
+                  click.trigger="showEditor('search-panel')">
             <span class="sw-icon-search"></span>
           </button>
-          <button class="btn btn-sm btn-default"
-                  >
+
+          <button class="btn btn-sm btn-default ${selectedCount > 0 ? '' : 'disabled'}"
+                  title="${'actions.purchase'|t}"
+                  click.delegate="purchase()">
             <span class="sw-icon-purchased"></span>
           </button>
         </div>
