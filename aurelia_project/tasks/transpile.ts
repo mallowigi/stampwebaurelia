@@ -23,7 +23,8 @@ var typescriptCompiler = typescriptCompiler || null;
 function buildTypeScript() {
   if(!typescriptCompiler) {
     typescriptCompiler = ts.createProject('tsconfig.json', {
-      "typescript": require('typescript')
+      "typescript": require('typescript'),
+      "noEmit": false
     });
   }
 

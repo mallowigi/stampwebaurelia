@@ -16,6 +16,10 @@ export class Countries extends EntityManaged {
     return "countries";
   }
 
+  get (data) : Country[] {
+    return super.get(data);
+  }
+
   updateInternalCount(data: any = {}) {
     if (this.loaded) {
       let countryRef = _.get(data, 'stamp.countryRef');

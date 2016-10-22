@@ -116,6 +116,13 @@ export class BaseService {
     throw new Error('Unimplemented resource name');
   }
 
+  get (response): any[] {
+    if (response && response.models) {
+      return response.models;
+    }
+    return [];
+  }
+
   /**
    * Return the list of params monitored by the cache
    * @param params

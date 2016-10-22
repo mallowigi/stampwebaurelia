@@ -2,6 +2,7 @@ import {autoinject} from 'aurelia-framework';
 import {EntityManaged} from './EntityManaged';
 import {HttpClient} from 'aurelia-http-client'
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {Preference} from './Preference';
 
 @autoinject
 export class Preferences extends EntityManaged {
@@ -18,5 +19,9 @@ export class Preferences extends EntityManaged {
 
   getResourceName(): any {
     return 'preferences';
+  }
+
+  get (data): Preference[] {
+    return super.get(data);
   }
 }
