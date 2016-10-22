@@ -2,8 +2,10 @@ import * as gulp from 'gulp';
 import * as browserSync from 'browser-sync';
 import * as historyApiFallback from 'connect-history-api-fallback/lib';
 import * as project from '../aurelia.json';
+import * as proxy from 'http-proxy-middleware';
 import build from './build';
 import {CLIOptions} from 'aurelia-cli';
+import * as proxySettings from './proxy.json';
 
 function onChange(path) {
   console.log(`File Changed: ${path}`);
@@ -13,6 +15,13 @@ function reload(done) {
   browserSync.reload();
   done();
 }
+
+var stampWebServicesProxy = proxy('/stamp-webservices', {
+  target: proxySettings['stamp-webservices'],
+  changeOrigin: true,
+  logLevel: 'debug',
+  secure: false
+});
 
 let serve = gulp.series(
   build,
@@ -24,7 +33,7 @@ let serve = gulp.series(
       logLevel: 'silent',
       server: {
         baseDir: ['.'],
-        middleware: [historyApiFallback(), function(req, res, next) {
+        middleware: [historyApiFallback(), stampWebServicesProxy, function(req, res, next) {
           res.setHeader('Access-Control-Allow-Origin', '*');
           next();
         }]

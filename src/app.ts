@@ -1,6 +1,7 @@
 import {Router, RouterConfiguration} from 'aurelia-router';
 import {I18N} from 'aurelia-i18n';
 import {autoinject, LogManager} from 'aurelia-framework';
+import {Countries} from './services/Countries';
 
 const logger = LogManager.getLogger('stamp-web');
 

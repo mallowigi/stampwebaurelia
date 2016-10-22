@@ -28,7 +28,7 @@ export class BaseService {
    * The base href
    * @type {string}
    */
-  baseHref = 'http://drake-server.ddns.net:9008/stamp-webservices';
+  baseHref = 'stamp-webservices';
 
   /**
    * Cache of parameters of the latest query

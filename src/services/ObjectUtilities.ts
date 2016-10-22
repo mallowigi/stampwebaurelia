@@ -1,5 +1,4 @@
-
-import ODataFilter from 'odata-filter-parser';
+import * as ODataFilter from 'odata-filter-parser';
 import * as _ from 'lodash';
 
 let Operators = ODataFilter.Operators;
