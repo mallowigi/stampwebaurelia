@@ -1,4 +1,4 @@
-import {autoinject} from 'aurelia-framework';
+import {autoinject, LogManager} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -28,7 +28,7 @@ export class BaseService {
    * The base href
    * @type {string}
    */
-  baseHref = '/stamp-webservices';
+  baseHref = 'http://drake-server.ddns.net:9008/stamp-webservices';
 
   /**
    * Cache of parameters of the latest query
@@ -67,7 +67,7 @@ export class BaseService {
 
   paramHelper = new ParameterHelper();
 
-  constructor(private http: HttpClient, private ea: EventAggregator) {
+  constructor(protected http: HttpClient, protected ea: EventAggregator) {
 
     this.http.configure(x => {
       x.withHeader('Accept', 'application/json');
@@ -103,9 +103,8 @@ export class BaseService {
 
   /**
    * Return the collection name. To be overriden by classes
-   * @returns {string}
    */
-  getCollectionName() {
+  getCollectionName(): string {
     return this.getResourceName();
   }
 
@@ -113,7 +112,7 @@ export class BaseService {
    * Returns the name of the resource.
    * Need to be overridden
    */
-  getResourceName() {
+  getResourceName(): string {
     throw new Error('Unimplemented resource name');
   }
 
@@ -196,7 +195,7 @@ export class BaseService {
   /**
    * Function to be called upon finishing find
    */
-  _postFind() {
+  _postFind(models) {
     // do nothing
   }
 
@@ -294,7 +293,7 @@ export class BaseService {
    * Fetch a request to the resource
    * @param options
    */
-  find(options) {
+  find(options = {}) {
     return new Promise((resolve, reject) => {
       let opts = _.extend({}, this.getDefaultSearchOptions(), options);
 

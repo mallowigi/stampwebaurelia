@@ -1,5 +1,6 @@
+
 import ODataFilter from 'odata-filter-parser';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 let Operators = ODataFilter.Operators;
 
@@ -40,7 +41,7 @@ export const ObjectUtilities = {
 };
 
 export const PredicateUtilities = {
-  removeMatches(subject, predicates) {
+  removeMatches(subject, predicates: any[]) {
     let predicateList = _.clone(predicates);
     if (predicateList.length === 1 && !Operators.isLogical(predicateList[0].operator)) {
 

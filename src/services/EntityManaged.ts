@@ -6,7 +6,7 @@ import {EventNames} from '../EventManaged';
 
 @autoinject
 export class EntityManaged extends BaseService {
-  constructor(private http: HttpClient, private ea: EventAggregator) {
+  constructor(protected http: HttpClient, protected ea: EventAggregator) {
     super(http, ea);
 
     // When receiving event "stampCount", update internal count of the entity

@@ -1,14 +1,14 @@
 import {autoinject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {HttpClient} from 'aurelia-http-client';
-import {EntityManaged} from '../../../services/EntityManaged';
-
 import * as _ from 'lodash';
-import {EventNames} from '../../../EventManaged';
+import {EntityManaged} from './EntityManaged';
+import {EventNames} from '../EventManaged';
+import {Country} from './Country';
 
 @autoinject
 export class Countries extends EntityManaged {
-  constructor(private http: HttpClient, private ea: EventAggregator) {
+  constructor(protected http: HttpClient, protected ea: EventAggregator) {
     super(http, ea);
   }
 
@@ -16,7 +16,7 @@ export class Countries extends EntityManaged {
     return "countries";
   }
 
-  updateInternalCount(data = {}) {
+  updateInternalCount(data: any = {}) {
     if (this.loaded) {
       let countryRef = _.get(data, 'stamp.countryRef');
       let country = this.getById(countryRef);
@@ -37,10 +37,10 @@ export class Countries extends EntityManaged {
    * @param model
    * @returns {Promise}
    */
-  remove(model) {
+  remove(model: Country) {
     return new Promise((resolve, reject) => {
       let howMuch = 0;
-      let stampCount = _.get(model, 'stampCount');
+      let stampCount = model.stampCount;
       // How much we want to remove
       if (stampCount > 0) {
         howMuch = -1 * stampCount;

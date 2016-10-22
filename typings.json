@@ -1,6 +1,8 @@
 {
   "name": "stamps",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20161015015725"
+  },
   "globalDevDependencies": {
     "angular-protractor": "registry:dt/angular-protractor#1.5.0+20160425143459",
     "i18next": "registry:dt/i18next#2.3.4+20160803175212",
@@ -9,6 +11,7 @@
     "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654"
   },
   "globalDependencies": {
+    "lodash": "registry:dt/lodash#4.14.0+20161004174455",
     "nprogress": "registry:dt/nprogress#0.0.0+20161003122759"
   }
 }
