@@ -3,7 +3,7 @@ import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 import * as _ from 'lodash';
-import {ObjectUtilities} from './ObjectUtilities';
+import {ObjectUtilities} from '../util/ObjectUtilities';
 import {EventNames} from '../EventManaged';
 
 const logger = LogManager.getLogger('services');
@@ -20,6 +20,11 @@ class ParameterHelper {
     }
     return s;
   }
+}
+
+interface EntitiesResponse {
+  models: Array<any>;
+  total: number
 }
 
 @autoinject
@@ -88,7 +93,7 @@ export class BaseService {
     _.each(this.models, m => (m.selected = true));
   }
 
-  clearSelected () {
+  clearSelected() {
     _.each(this.models, m => (m.selected = false));
   }
 
@@ -116,7 +121,7 @@ export class BaseService {
     throw new Error('Unimplemented resource name');
   }
 
-  get (response): any[] {
+  get(response): any[] {
     if (response && response.models) {
       return response.models;
     }
@@ -300,7 +305,7 @@ export class BaseService {
    * Fetch a request to the resource
    * @param options
    */
-  find(options = {}) {
+  find(options = {}): Promise<EntitiesResponse> {
     return new Promise((resolve, reject) => {
       let opts = _.extend({}, this.getDefaultSearchOptions(), options);
 
