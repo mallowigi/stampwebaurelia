@@ -17,8 +17,9 @@ import {SearchQuery} from '../../../models/SearchQuery';
 import Operators = ODataFilterParser.Operators;
 import {Stamps} from '../../../services/Stamps';
 import {PageModel} from '../../../models/PageModel';
-import {EntitiesResponse} from '../../../models/EntitiesResponses';
 import {DisplayMode} from '../../../models/DisplayMode';
+import {PanelNames} from '../../../models/PanelNames';
+import {CurrencyCode} from '../../../models/CurrencyCode';
 
 const logger = LogManager.getLogger('stamp-list');
 
@@ -30,7 +31,18 @@ export class StampsList extends EventManaged {
    * @type {Array}
    */
   private stamps: Stamp[] = [];
+  /**
+   * List of stamps
+   */
   private stampCount: number;
+  /**
+   * Editing stamp
+   */
+  private editingStamp: Stamp;
+  /**
+   * last selected stamp
+   */
+  private lastSelected: Stamp;
 
   /**
    * Fetched country list
@@ -54,7 +66,7 @@ export class StampsList extends EventManaged {
     $skip: 0,
     $orderBy: 'name',
     sort: '',
-    sortDirection: 'ssc'
+    sortDirection: 'asc'
   };
 
   /**
@@ -69,16 +81,19 @@ export class StampsList extends EventManaged {
   private referenceMode = false;
 
   /**
-   * last selected stamp
+   * Current display mode
    */
-  private lastSelected: Stamp;
-
   private displayMode: DisplayMode;
 
   /**
    * Pagination model
    */
-  private pageInfo : PageModel = new PageModel();
+  private pageInfo: PageModel = new PageModel();
+
+  /**
+   * The panel name
+   */
+  private panelContents: PanelNames;
 
   constructor(private ea: EventAggregator,
               private element: Element,
@@ -158,6 +173,23 @@ export class StampsList extends EventManaged {
       }).catch((err) => reject(err));
 
     });
+  }
+
+  /**
+   * Show a panel in the editor
+   * @param panelName
+   */
+  showEditor(panelName: PanelNames) {
+    switch (panelName) {
+      case PanelNames.createStamp:
+      case PanelNames.createWantList:
+        // this.editingStamp = createStamp()
+        this.panelContents = PanelNames.stampEditor;
+        break;
+      case PanelNames.searchPanel:
+        this.panelContents = panelName;
+        break;
+    }
   }
 
   /**
@@ -274,5 +306,34 @@ export class StampsList extends EventManaged {
       let target = $(this.element).find(targetElement);
       target.animate({scrollTop: 0}, 'fast');
     });
+  }
+
+  get selectedCount () {
+    return this.stampService.getSelected().length;
+  }
+
+  /**
+   * Purchase selected stamps
+   */
+  purchase () {
+    let selected = this.stampService.getSelected();
+    if (selected && selected.length) {
+      // Remove selected stamps that are in want list
+      selected = _.filter(selected, {wantList: false});
+      if (selected.length) {
+        // Open dialog service
+        let purchase = {
+          price: 0,
+          currency: CurrencyCode.USD.key,
+          updateExisting: true,
+          selectedStamps: selected
+        };
+
+        // this.dialogService.open({
+        //   viewModel: PurchaseForm,
+        //   model: purchase
+        // });
+      }
+    }
   }
 }
