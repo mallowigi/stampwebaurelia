@@ -4,7 +4,7 @@ import {HttpClient} from 'aurelia-http-client';
 import * as _ from 'lodash';
 import {EntityManaged} from './EntityManaged';
 import {EventNames} from '../EventManaged';
-import {Country} from './Country';
+import {Country} from '../models/Country';
 
 @autoinject
 export class Countries extends EntityManaged {

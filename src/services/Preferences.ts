@@ -2,7 +2,7 @@ import {autoinject} from 'aurelia-framework';
 import {EntityManaged} from './EntityManaged';
 import {HttpClient} from 'aurelia-http-client'
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Preference} from './Preference';
+import {Preference} from '../models/Preference';
 
 @autoinject
 export class Preferences extends EntityManaged {

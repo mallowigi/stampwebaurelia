@@ -2,7 +2,7 @@ import {autoinject} from 'aurelia-framework';
 import {EntityManaged} from './EntityManaged';
 import {HttpClient} from 'aurelia-http-client'
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Stamp} from './Stamp';
+import {Stamp} from '../models/Stamp';
 import {EventNames} from '../EventManaged';
 
 import * as _ from 'lodash';

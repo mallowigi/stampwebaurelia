@@ -9,10 +9,10 @@ import {Parser, Predicate} from 'odata-filter-parser';
 
 import * as _ from 'lodash';
 import * as $ from 'jquery';
-import {Country} from '../../../services/Country';
-import {Preference} from '../../../services/Preference';
+import {Country} from '../../../models/Country';
+import {Preference} from '../../../models/Preference';
 import {LocationHelper} from '../../../util/LocationHelper';
-import {Stamp} from '../../../services/Stamp';
+import {Stamp} from '../../../models/Stamp';
 import {SearchQuery} from '../../../models/SearchQuery';
 import Operators = ODataFilterParser.Operators;
 import {Stamps} from '../../../services/Stamps';
@@ -89,6 +89,12 @@ export class StampsList extends EventManaged {
     super(ea);
   }
 
+  /**
+   * When loading the route, setup the view.
+   * @param params
+   * @param routeConfig
+   * @return {Promise<T>}
+   */
   activate(params, routeConfig: RouterConfiguration) {
     let startTime = new Date().getTime();
     let referenced = localStorage.getItem(StorageKeys.referenceCatalogueNumbers);
