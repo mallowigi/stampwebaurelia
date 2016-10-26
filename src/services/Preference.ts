@@ -1,3 +1,6 @@
 export interface Preference {
-  id: number
+  id: number,
+  name: string,
+  category: string,
+  value: string
 }

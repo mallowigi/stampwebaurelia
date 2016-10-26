@@ -16,7 +16,7 @@ export class Countries extends EntityManaged {
     return "countries";
   }
 
-  get (data) : Country[] {
+  get(data): Country[] {
     return super.get(data);
   }
 

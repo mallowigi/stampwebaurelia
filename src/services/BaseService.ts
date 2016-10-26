@@ -5,6 +5,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import * as _ from 'lodash';
 import {ObjectUtilities} from '../util/ObjectUtilities';
 import {EventNames} from '../EventManaged';
+import {EntitiesResponse} from '../models/EntitiesResponses';
 
 const logger = LogManager.getLogger('services');
 
@@ -22,10 +23,6 @@ class ParameterHelper {
   }
 }
 
-interface EntitiesResponse {
-  models: Array<any>;
-  total: number
-}
 
 @autoinject
 export class BaseService {

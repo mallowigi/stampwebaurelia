@@ -24,4 +24,17 @@ export class Preferences extends EntityManaged {
   get (data): Preference[] {
     return super.get(data);
   }
+
+  /**
+   * Find a preference by name and category
+   * @param name
+   * @param category
+   * @return {T}
+   */
+  getByNameAndCategory(name: string, category: string): Preference {
+    if (!this.loaded) {
+      throw new Error ('The service need to be loaded first');
+    }
+    return _.find(this.models, {name, category});
+  }
 }

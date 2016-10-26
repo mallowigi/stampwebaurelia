@@ -18,25 +18,25 @@ declare namespace ODataFilterParser {
     value: string;
     operator: Operator;
 
-    concat(operator, p);
+    static concat(operator, p);
 
     flatten(result?);
 
     serialize();
   }
   class Operators {
-    EQUALS: Operator;
-    AND: Operator;
-    OR: Operator;
-    GREATER_THAN: Operator;
-    GREATER_THAN_EQUAL: Operator;
-    LESS_THAN: Operator;
-    LESS_THAN_EQUAL: Operator;
-    LIKE: Operator;
-    IS_NULL: Operator;
-    NOT_EQUAL: Operator;
-    isUnary(op);
-    isLogical(op);
+    static EQUALS: Operator;
+    static AND: Operator;
+    static OR: Operator;
+    static GREATER_THAN: Operator;
+    static GREATER_THAN_EQUAL: Operator;
+    static LESS_THAN: Operator;
+    static LESS_THAN_EQUAL: Operator;
+    static LIKE: Operator;
+    static IS_NULL: Operator;
+    static NOT_EQUAL: Operator;
+    static isUnary(op);
+    static isLogical(op);
   }
 
   class Parser {
