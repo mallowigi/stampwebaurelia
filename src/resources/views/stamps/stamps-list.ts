@@ -5,7 +5,7 @@ import {Preferences} from '../../../services/Preferences';
 import {EventManaged, StorageKeys} from '../../../EventManaged';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
-import {Parser, Predicate} from 'odata-filter-parser';
+import {Parser, Predicate, Operators} from 'odata-filter-parser';
 
 import * as _ from 'lodash';
 import * as $ from 'jquery';
@@ -14,12 +14,13 @@ import {Preference} from '../../../models/Preference';
 import {LocationHelper} from '../../../util/LocationHelper';
 import {Stamp} from '../../../models/Stamp';
 import {SearchQuery} from '../../../models/SearchQuery';
-import Operators = ODataFilterParser.Operators;
 import {Stamps} from '../../../services/Stamps';
 import {PageModel} from '../../../models/PageModel';
 import {DisplayMode} from '../../../models/DisplayMode';
 import {PanelNames} from '../../../models/PanelNames';
 import {CurrencyCode} from '../../../models/CurrencyCode';
+import {DialogService} from 'aurelia-dialog';
+import {PurchaseForm} from './purchase-form';
 
 const logger = LogManager.getLogger('stamp-list');
 
@@ -100,7 +101,8 @@ export class StampsList extends EventManaged {
               private router: Router,
               private stampService: Stamps,
               private countryService: Countries,
-              private preferenceService: Preferences) {
+              private preferenceService: Preferences,
+              private dialogService: DialogService) {
     super(ea);
   }
 
@@ -131,7 +133,10 @@ export class StampsList extends EventManaged {
 
       this.options.$filter = $filter;
       this.options.$orderBy = $orderBy;
-      this.options.$skip = $skip;
+
+      if ($skip) {
+        this.options.$skip = $skip;
+      }
 
       if ($filter) {
         // Parse odata filter and save them in currentFilters
@@ -171,7 +176,6 @@ export class StampsList extends EventManaged {
         logger.debug(`StampGrid initialization time: ${new Date().getTime() - startTime}`);
         resolve();
       }).catch((err) => reject(err));
-
     });
   }
 
@@ -239,8 +243,12 @@ export class StampsList extends EventManaged {
 
     // Finally serialize currentfilters
     if (_.size(this.currentFilters) > 0) {
-      let predicate = Predicate.concat(Operators.AND, this.currentFilters);
-      opts.$filter = predicate.serialize();
+      if (this.currentFilters.length > 1) {
+        let predicate = Predicate.concat(Operators.AND, this.currentFilters);
+        opts.$filter = predicate.serialize();
+      } else {
+        opts.$filter = this.currentFilters[0].serialize();
+      }
 
       logger.debug(`$filter=${opts.$filter}`);
     }
@@ -308,14 +316,14 @@ export class StampsList extends EventManaged {
     });
   }
 
-  get selectedCount () {
+  get selectedCount() {
     return this.stampService.getSelected().length;
   }
 
   /**
    * Purchase selected stamps
    */
-  purchase () {
+  purchase() {
     let selected = this.stampService.getSelected();
     if (selected && selected.length) {
       // Remove selected stamps that are in want list
@@ -329,10 +337,14 @@ export class StampsList extends EventManaged {
           selectedStamps: selected
         };
 
-        // this.dialogService.open({
-        //   viewModel: PurchaseForm,
-        //   model: purchase
-        // });
+        this.dialogService.open({
+          viewModel: PurchaseForm,
+          model: purchase
+        }).then(() => {
+          // post process purchases
+        }).catch(() => {
+          // handle cancel
+        });
       }
     }
   }
