@@ -1,8 +1,7 @@
 import {LogManager, Aurelia} from 'aurelia-framework'
-import {ConsoleAppender} from 'aurelia-logging-console';
 import environment from './environment';
 import {I18N} from 'aurelia-i18n';
-import * as Backend from 'i18next-xhr-backend';
+import Backend from 'i18next-xhr-backend';
 
 const logger = LogManager.getLogger('stamp-web');
 if (window.location.href.indexOf('debug=true') >= 0) {
@@ -54,7 +53,7 @@ export function configure(aurelia) {
       ns: ['stamp-web'/*, 'translation'*/],
       fallbackNS: ['stamp-web'],
       defaultNS: 'stamp-web',
-      debug: false // make true to see un-translated keys
+      debug: true // make true to see un-translated keys
     }).then(() => {
       aurelia.setupI18NFinished = true;
       setRoot(aurelia);

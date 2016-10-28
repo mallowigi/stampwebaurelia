@@ -95,6 +95,10 @@ export class StampsList extends EventManaged {
    * The panel name
    */
   private panelContents: PanelNames;
+  /**
+   * Whether the editor is shown
+   */
+  private editorShown: boolean;
 
   constructor(private ea: EventAggregator,
               private element: Element,
@@ -187,13 +191,17 @@ export class StampsList extends EventManaged {
     switch (panelName) {
       case PanelNames.createStamp:
       case PanelNames.createWantList:
-        // this.editingStamp = createStamp()
+        this.editingStamp = new Stamp({action: PanelNames.createWantList});
         this.panelContents = PanelNames.stampEditor;
         break;
       case PanelNames.searchPanel:
         this.panelContents = panelName;
         break;
+      default:
+        break;
     }
+
+    this.editorShown = true;
   }
 
   /**
@@ -201,7 +209,7 @@ export class StampsList extends EventManaged {
    * @return {Promise<T>}
    */
   private search() {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       let opts = this.buildOptions();
       // Remove selected stamp
       this.stampService.clearSelected();

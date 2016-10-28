@@ -6,7 +6,7 @@ declare module 'i18next-xhr-backend' {
   interface Services {
     interpolator: Interpolator
   }
-  export class Backend {
+  export default class Backend {
     type: 'backend';
     services: Services;
     options: {
