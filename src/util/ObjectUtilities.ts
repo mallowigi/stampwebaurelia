@@ -1,8 +1,3 @@
-import * as ODataFilter from 'odata-filter-parser';
-import * as _ from 'lodash';
-
-let Operators = ODataFilter.Operators;
-
 export const ObjectUtilities = {
   isEqual(objA, objB) {
     if (!objA || !objB) {
@@ -39,43 +34,3 @@ export const ObjectUtilities = {
 
 };
 
-export const PredicateUtilities = {
-  removeMatches(subject, predicates: any[]) {
-    let predicateList = _.clone(predicates);
-    if (predicateList.length === 1 && !Operators.isLogical(predicateList[0].operator)) {
-
-      if (predicateList[0].subject === subject) {
-        predicateList.shift();
-      }
-    }
-    else {
-      _.remove(predicateList, {subject: subject});
-      let logicals = _.filter(predicateList, item => Operators.isLogical(item.operator));
-      if (logicals.length > 0) {
-        _.forEach(logicals, logical => {
-          let flattened = logical.flatten();
-          let processed = PredicateUtilities.removeMatches(subject, flattened);
-          if (processed.length < flattened.length) {
-            let indx = _.indexOf(predicateList, logical);
-            predicateList.splice(indx, 1);
-          }
-        });
-      }
-    }
-    return predicateList;
-  }
-};
-
-export var StringUtil = {
-  pluralize: function (str, count) {
-    var s = str;
-    if (count > 1) {
-      if (str.endsWith("y")) {
-        s = str.substring(0, str.length - 1) + 'ies';
-      } else {
-        s += 's';
-      }
-    }
-    return s;
-  }
-};

@@ -21,6 +21,7 @@ import {PanelNames} from '../../../models/PanelNames';
 import {CurrencyCode} from '../../../models/CurrencyCode';
 import {DialogService} from 'aurelia-dialog';
 import {PurchaseForm} from './purchase-form';
+import {PredicateUtilities} from '../../../util/PredicateUtilities';
 
 const logger = LogManager.getLogger('stamp-list');
 
@@ -43,7 +44,7 @@ export class StampsList extends EventManaged {
   /**
    * last selected stamp
    */
-  private lastSelected: Stamp;
+  private latestSelected: Stamp;
 
   /**
    * Fetched country list
@@ -56,7 +57,11 @@ export class StampsList extends EventManaged {
    */
   private preferences: Preference[] = [];
 
-  private currentFilters = [];
+  /**
+   * List of search predicates
+   * @type {Array}
+   */
+  private currentFilters: Predicate[] = [];
 
   /**
    * Filtering options
@@ -77,11 +82,6 @@ export class StampsList extends EventManaged {
   private _defaultImagePath = 'http://drake-server.ddns.net:9001/Pictures/Stamps';
 
   /**
-   * Whether we show by reference or not
-   */
-  private referenceMode = false;
-
-  /**
    * Current display mode
    */
   private displayMode: DisplayMode;
@@ -98,7 +98,16 @@ export class StampsList extends EventManaged {
   /**
    * Whether the editor is shown
    */
-  private editorShown: boolean;
+  private editorShown: boolean = false;
+  /**
+   * The search entered value
+   */
+  private searchText: string;
+
+  /**
+   * Display/Hide the reference catalogue numbers table
+   */
+  private referenceMode = false;
 
   constructor(private ea: EventAggregator,
               private element: Element,
@@ -204,6 +213,56 @@ export class StampsList extends EventManaged {
     this.editorShown = true;
   }
 
+  selectAll(select = false) {
+    if (!select) {
+      this.stampService.clearSelected();
+
+      if (this.editingStamp) {
+        this.editorShown = false;
+        this.editingStamp = null;
+        this.latestSelected = null;
+      }
+    }
+    else {
+      this.stampService.selectAll();
+    }
+  }
+
+  /**
+   * Send a search request
+   */
+  sendSearch() {
+    // Remove latest search and relaunch search
+    this.currentFilters = PredicateUtilities.removeMatches('description', this.currentFilters);
+    if (!_.isEmpty(this.searchText)) {
+      let predicate = new Predicate({
+        subject: 'description',
+        operators: Operators.EQUALS,
+        value: this.searchText
+      });
+
+      this.currentFilters.unshift(predicate);
+    }
+
+    this.search();
+  }
+
+  /**
+   * Clear search and return all stamps
+   */
+  clearSearch() {
+    this.searchText = '';
+    this.sendSearch();
+  }
+
+  /**
+   * Change display mode
+   * @param displayMode
+   */
+  setDisplayMode(displayMode: DisplayMode) {
+    this.displayMode = displayMode;
+  }
+
   /**
    * Search for stamps using the current filters
    * @return {Promise<T>}
@@ -271,7 +330,7 @@ export class StampsList extends EventManaged {
    * @param opts
    */
   private processStamps({models, total}, opts: SearchQuery) {
-    this.lastSelected = undefined; // clear any editing stamps
+    this.latestSelected = undefined; // clear any editing stamps
     this.generatePageModels(1, 0);
 
     this.stamps = models;
@@ -355,5 +414,25 @@ export class StampsList extends EventManaged {
         });
       }
     }
+  }
+
+  /**
+   * Return the state of the showReferenceTable button
+   */
+  get referenceTableState() {
+    if (this.referenceMode && this.displayMode === DisplayMode.GRID) {
+      return 'active';
+    } else if (this.displayMode === DisplayMode.LIST) {
+      return 'disabled'
+    }
+    return '';
+  }
+
+  /**
+   * Toggle reference catalogue table
+   */
+  toggleCatalogueNumbers () {
+    this.referenceMode = !this.referenceMode;
+    localStorage.setItem(StorageKeys.referenceCatalogueNumbers, String(this.referenceMode));
   }
 }
