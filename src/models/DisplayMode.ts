@@ -1,5 +1,5 @@
-export class DisplayMode {
-  static GRID = 'Grid';
-  static LIST = 'List';
-  static UPGRADE = 'Upgrade';
+export enum DisplayMode {
+  GRID,
+  LIST,
+  UPGRADE
 }

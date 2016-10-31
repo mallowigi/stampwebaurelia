@@ -1,4 +1,4 @@
-import {autoinject, LogManager} from 'aurelia-framework';
+import {autoinject, LogManager, computedFrom} from 'aurelia-framework';
 import {Router, RouterConfiguration} from 'aurelia-router';
 import {Countries} from '../../../services/Countries';
 import {Preferences} from '../../../services/Preferences';
@@ -22,6 +22,7 @@ import {CurrencyCode} from '../../../models/CurrencyCode';
 import {DialogService} from 'aurelia-dialog';
 import {PurchaseForm} from './purchase-form';
 import {PredicateUtilities} from '../../../util/PredicateUtilities';
+import {StampFilter, StampFilters} from '../../../models/StampFilter';
 
 const logger = LogManager.getLogger('stamp-list');
 
@@ -56,6 +57,11 @@ export class StampsList extends EventManaged {
    * @type {Array}
    */
   private preferences: Preference[] = [];
+
+  /**
+   * Selected stamp filter
+   */
+  private stampFilter: StampFilter = StampFilters.ALL;
 
   /**
    * List of search predicates
@@ -103,6 +109,12 @@ export class StampsList extends EventManaged {
    * The search entered value
    */
   private searchText: string;
+
+  /**
+   * Sorting columns
+   * @type {[string,string,string]}
+   */
+  private sortColumns = ['number', 'value', 'pricePaid'];
 
   /**
    * Display/Hide the reference catalogue numbers table
@@ -419,6 +431,7 @@ export class StampsList extends EventManaged {
   /**
    * Return the state of the showReferenceTable button
    */
+  @computedFrom('referenceMode', 'displayMode')
   get referenceTableState() {
     if (this.referenceMode && this.displayMode === DisplayMode.GRID) {
       return 'active';
@@ -431,8 +444,45 @@ export class StampsList extends EventManaged {
   /**
    * Toggle reference catalogue table
    */
-  toggleCatalogueNumbers () {
+  toggleCatalogueNumbers() {
     this.referenceMode = !this.referenceMode;
     localStorage.setItem(StorageKeys.referenceCatalogueNumbers, String(this.referenceMode));
+  }
+
+  /**
+   * Set a sort option and sort
+   * @param sortCol
+   */
+  setSort(sortCol) {
+    this.options.sort = sortCol;
+    if (!this.options.sortDirection) {
+      this.options.sortDirection = 'asc';
+    }
+
+    this.search();
+  }
+
+  /**
+   * Clear sorting
+   */
+  clearSort() {
+    this.options.sort = 'placeholder';
+    this.search();
+  }
+
+  /**
+   * Toggle the sort direction
+   */
+  toggleSortDirection() {
+    this.options.sortDirection = (this.options.sortDirection === 'asc' ? 'desc' : 'asc');
+    this.search();
+  }
+
+  /**
+   * Return the selected filter description
+   * @param filter
+   */
+  getFilterText(filter) {
+    return filter.description;
   }
 }
