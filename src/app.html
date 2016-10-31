@@ -1,8 +1,11 @@
 <template>
+  <require from="resources/elements/navbar/navbar"></require>
   <require from="resources/elements/loading-indicator"></require>
 
   <require from="theme/bootstrap.css"></require>
   <require from="app.css"></require>
+  
+  <navbar router.bind="router"></navbar>
 
   <div class="page-host">
     <loading-indicator loading.bind="router.isNavigating"></loading-indicator>

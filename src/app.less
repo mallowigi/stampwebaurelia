@@ -3,6 +3,16 @@
 
 
 * {
+  &::selection {
+    background: transparent;
+  }
+  &::-moz-selection {
+    background: transparent;
+  }
+  input::selection, textarea::selection {
+    background: @component-active-bg;
+    color: @component-active-color;
+  }
 }
 
 html {
@@ -12,6 +22,10 @@ html {
 body {
   margin: 0;
   height: auto;
+}
+
+section {
+  margin: 0 20px;
 }
 
 .page-host {
@@ -43,4 +57,27 @@ body {
   display: flex;
   -webkit-flex: 2;
   flex: 2;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.packed-col {
+  padding-left: 0;
+}
+
+.sw-warning {
+  color: @brand-warning;
+}
+
+#nprogress {
+  .bar {
+    background: @progress-color !important;
+    height: 3px;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px @progress-color, 0 0 5px @progress-working !important;
+  }
 }

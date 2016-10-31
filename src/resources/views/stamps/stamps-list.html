@@ -2,188 +2,188 @@
   <require from="./stamps-list.css"></require>
   <require from="../../attributes/find-target"></require>
 
-  <nav class="navbar navbar-default">
-    <form class="navbar-form">
-      <div class="btn-toolbar">
+  <!--<nav class="navbar navbar-default">-->
+    <!--<form class="navbar-form">-->
+      <!--<div class="btn-toolbar">-->
 
-        <div class="btn-group" role="group">
-          <!-- Create stamp -->
-          <button type="button" class="btn btn-sm btn-default"
-                  name="createStamp"
-                  title="${'nav.new-stamp'|t}"
-                  click.trigger="showEditor('create-stamp')">
-            <span class="sw-icon-plus"></span>
-          </button>
-          <!-- Search criteria -->
-          <button class="btn btn-sm btn-default"
-                  name="searchPanel"
-                  title="${'nav.search'|t}"
-                  click.trigger="showEditor('search-panel')">
-            <span class="sw-icon-search"></span>
-          </button>
-          <!-- Purchase selected stamps-->
-          <button class="btn btn-sm btn-default ${selectedCount > 0 ? '' : 'disabled'}"
-                  name="purchase"
-                  title="${'actions.purchase'|t}"
-                  click.delegate="purchase()">
-            <span class="sw-icon-purchased"></span>
-          </button>
-        </div>
+        <!--<div class="btn-group" role="group">-->
+          <!--&lt;!&ndash; Create stamp &ndash;&gt;-->
+          <!--<button type="button" class="btn btn-sm btn-default"-->
+                  <!--name="createStamp"-->
+                  <!--title="${'nav.new-stamp'|t}"-->
+                  <!--click.trigger="showEditor('create-stamp')">-->
+            <!--<span class="sw-icon-plus"></span>-->
+          <!--</button>-->
+          <!--&lt;!&ndash; Search criteria &ndash;&gt;-->
+          <!--<button class="btn btn-sm btn-default"-->
+                  <!--name="searchPanel"-->
+                  <!--title="${'nav.search'|t}"-->
+                  <!--click.trigger="showEditor('search-panel')">-->
+            <!--<span class="sw-icon-search"></span>-->
+          <!--</button>-->
+          <!--&lt;!&ndash; Purchase selected stamps&ndash;&gt;-->
+          <!--<button class="btn btn-sm btn-default ${selectedCount > 0 ? '' : 'disabled'}"-->
+                  <!--name="purchase"-->
+                  <!--title="${'actions.purchase'|t}"-->
+                  <!--click.delegate="purchase()">-->
+            <!--<span class="sw-icon-purchased"></span>-->
+          <!--</button>-->
+        <!--</div>-->
 
-        <div class="btn-group" role="group">
-          <!--Select all-->
-          <button type="button" class="btn btn-sm btn-default"
-                  name="selectAll"
-                  title="${'nav.select-all'|t}"
-                  click.trigger="selectAll(true)">
-            <span class="sw-icon-select-all"></span>
-          </button>
-          <!--Deselect all-->
-          <button type="button" class="btn btn-sm btn-default"
-                  name="deselectAll"
-                  title="${'nav.clear-all'|t}"
-                  click.trigger="selectAll(false)">
-            <span class="sw-icon-clear-all"></span>
-          </button>
-        </div>
+        <!--<div class="btn-group" role="group">-->
+          <!--&lt;!&ndash;Select all&ndash;&gt;-->
+          <!--<button type="button" class="btn btn-sm btn-default"-->
+                  <!--name="selectAll"-->
+                  <!--title="${'nav.select-all'|t}"-->
+                  <!--click.trigger="selectAll(true)">-->
+            <!--<span class="sw-icon-select-all"></span>-->
+          <!--</button>-->
+          <!--&lt;!&ndash;Deselect all&ndash;&gt;-->
+          <!--<button type="button" class="btn btn-sm btn-default"-->
+                  <!--name="deselectAll"-->
+                  <!--title="${'nav.clear-all'|t}"-->
+                  <!--click.trigger="selectAll(false)">-->
+            <!--<span class="sw-icon-clear-all"></span>-->
+          <!--</button>-->
+        <!--</div>-->
 
-        <!--Search field -->
-        <div class="btn-group input-group quick-search hidden-xs hidden-sm">
-          <input type="text" find-target
-                 class="form-control"
-                 name="searchField"
-                 value.two-way="searchText"
-                 placeholder="Search">
-          <button class="btn btn-sm btn-default"
-                  name="search"
-                  title="Search"
-                  click.delegate="sendSearch()">
-            <span class="sw-icon-filter"></span>
-          </button>
-          <button class="btn btn-sm btn-default"
-                  name="clearSearch"
-                  title="Clear search"
-                  click.delegate="clearSearch()">
-            <span class="sw-icon-cancel"></span>
-          </button>
-        </div>
-
-        <!-- Display modes -->
-        <div class="btn-group" role="group">
-          <button class="btn btn-sm btn-default ${  displayMode === DisplayMode.GRID ? 'active' : ''}"
-                  name="grid"
-                  title="${'actions.show-as-grid'|t}"
-                  click.trigger="setDisplayMode('Grid')">
-            <span class="sw-icon-gridview"></span>
-          </button>
-          <button class="btn btn-sm btn-default ${ displayMode === DisplayMode.LIST ? 'active' : ''}"
-                  name="list"
-                  title="${'actions.show-as-table'|t}"
-                  click.trigger="setDisplayMode('List')">
-            <span class="sw-icon-list"></span>
-          </button>
-          <button class="btn btn-sm btn-default ${ displayMode === DisplayMode.UPGRADE ? 'active' : ''}"
-                  name="upgrade"
-                  title="${'actions.show-as-upgrade'|t}"
-                  click.trigger="setDisplayMode('Upgrade')">
-            <span class="sw-icon-exchange"></span>
-          </button>
-        </div>
-
-        <!--Show catalogue numbers-->
-        <div class="btn-group" role="group">
-          <button class="btn btn-sm btn-default ${ referenceTableState }"
-                  name="showCatalogueNumbers"
-                  disabled.bind="referenceTableState === 'disabled'"
-                  title="${'actions.show-reference-cataloguenumbers'|t}"
-                  click.delegate="toggleCatalogueNumbers()">
-            <span class="sw-icon-references"></span>
-          </button>
-        </div>
-
-        <!-- Sort actions -->
-        <!--<div class="btn-group sort-actions">-->
-          <!--<div class="dropdown">-->
-            <!--&lt;!&ndash;Dropdown trigger&ndash;&gt;-->
-            <!--<button type="button"-->
-                    <!--name="sort"-->
-                    <!--class="btn btn-default btn-sm dropdown-toggle sort-selector"-->
-                    <!--data-toggle="dropdown">-->
-              <!--<span class="selector-text">${'sort.' + options.sort|t | defaultValue:'sort.placeholder'|t}</span>-->
-              <!--<span class="caret"></span>-->
-            <!--</button>-->
-            <!--&lt;!&ndash; Dropdown &ndash;&gt;-->
-            <!--<ul class="dropdown-menu" role="menu">-->
-              <!--<li repeat.for="sortCol of sortColumns"-->
-                  <!--click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}-->
-              <!--</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-          <!--&lt;!&ndash; Clear sort &ndash;&gt;-->
-          <!--<button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}"-->
-                  <!--title="Clear sort"-->
-                  <!--name="clearSort"-->
-                  <!--click.trigger="clearSort()">-->
+        <!--&lt;!&ndash;Search field &ndash;&gt;-->
+        <!--<div class="btn-group input-group quick-search hidden-xs hidden-sm">-->
+          <!--<input type="text" find-target-->
+                 <!--class="form-control"-->
+                 <!--name="searchField"-->
+                 <!--value.two-way="searchText"-->
+                 <!--placeholder="Search">-->
+          <!--<button class="btn btn-sm btn-default"-->
+                  <!--name="search"-->
+                  <!--title="Search"-->
+                  <!--click.delegate="sendSearch()">-->
+            <!--<span class="sw-icon-filter"></span>-->
+          <!--</button>-->
+          <!--<button class="btn btn-sm btn-default"-->
+                  <!--name="clearSearch"-->
+                  <!--title="Clear search"-->
+                  <!--click.delegate="clearSearch()">-->
             <!--<span class="sw-icon-cancel"></span>-->
           <!--</button>-->
-          <!--&lt;!&ndash; Change sort direction &ndash;&gt;-->
-          <!--<button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}"-->
-                  <!--name="toggleSortDirection"-->
-                  <!--click.trigger="toggleSortDirection()">-->
-            <!--<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; Display modes &ndash;&gt;-->
+        <!--<div class="btn-group" role="group">-->
+          <!--<button class="btn btn-sm btn-default ${  displayMode === DisplayMode.GRID ? 'active' : ''}"-->
+                  <!--name="grid"-->
+                  <!--title="${'actions.show-as-grid'|t}"-->
+                  <!--click.trigger="setDisplayMode('Grid')">-->
+            <!--<span class="sw-icon-gridview"></span>-->
+          <!--</button>-->
+          <!--<button class="btn btn-sm btn-default ${ displayMode === DisplayMode.LIST ? 'active' : ''}"-->
+                  <!--name="list"-->
+                  <!--title="${'actions.show-as-table'|t}"-->
+                  <!--click.trigger="setDisplayMode('List')">-->
+            <!--<span class="sw-icon-list"></span>-->
+          <!--</button>-->
+          <!--<button class="btn btn-sm btn-default ${ displayMode === DisplayMode.UPGRADE ? 'active' : ''}"-->
+                  <!--name="upgrade"-->
+                  <!--title="${'actions.show-as-upgrade'|t}"-->
+                  <!--click.trigger="setDisplayMode('Upgrade')">-->
+            <!--<span class="sw-icon-exchange"></span>-->
           <!--</button>-->
         <!--</div>-->
 
-        <!--Stamp filter -->
-        <!--<div class="dropdown hidden-xs hidden-sm">-->
-          <!--&lt;!&ndash;Stamp filter button&ndash;&gt;-->
-          <!--<button type="button"-->
-                  <!--name="stampFilter"-->
-                  <!--class="btn btn-default btn-sm dropdown-toggle"-->
-                  <!--data-toggle="dropdown"-->
-                  <!--aria-expanded="false">-->
-            <!--<span class="selector-text">${getFilterText(stampFilter)|t | defaultValue:'filters.filter'|t}</span>-->
-            <!--<span class="caret"></span>-->
+        <!--&lt;!&ndash;Show catalogue numbers&ndash;&gt;-->
+        <!--<div class="btn-group" role="group">-->
+          <!--<button class="btn btn-sm btn-default ${ referenceTableState }"-->
+                  <!--name="showCatalogueNumbers"-->
+                  <!--disabled.bind="referenceTableState === 'disabled'"-->
+                  <!--title="${'actions.show-reference-cataloguenumbers'|t}"-->
+                  <!--click.delegate="toggleCatalogueNumbers()">-->
+            <!--<span class="sw-icon-references"></span>-->
           <!--</button>-->
-          <!--&lt;!&ndash; Stamp filter dropdown &ndash;&gt;-->
-          <!--<ul class="dropdown-menu" role="menu">-->
-            <!--<li repeat.for="filter of filters"-->
-                <!--click.trigger="$parent.setFilter($index)">-->
-              <!--${$parent.getFilterText(filter)|t}-->
-            <!--</li>-->
-          <!--</ul>-->
         <!--</div>-->
 
-        <!--<div class="dropdown hidden-xs hidden-sm">-->
-          <!--<button type="button"-->
-                  <!--class="btn btn-default btn-sm dropdown-toggle"-->
-                  <!--data-toggle="dropdown"-->
-                  <!--aria-expanded="false">-->
-            <!--<span class="selector-text">${getFilterText(conditionFilter)|t |-->
-              <!--defaultValue:'conditionFilters.ALL_STAMPS'|t}</span>-->
-            <!--<span class="caret"></span>-->
-          <!--</button>-->
-          <!--<ul class="dropdown-menu" role="menu">-->
-            <!--<li repeat.for="filter of conditionFilters"-->
-                <!--click.trigger="$parent.setConditionFilter($index)">-->
-              <!--${$parent.getFilterText(filter)|t}-->
-            <!--</li>-->
-          <!--</ul>-->
-        <!--</div>-->
-        <!--<div class="dropdown hidden-xs hidden-sm">-->
-          <!--<button type="button"-->
-                  <!--class="btn btn-default btn-sm dropdown-toggle result-size-selector"-->
-                  <!--data-toggle="dropdown">-->
-            <!--<span class="selector-text">${options.$top | defaultValue:'actions.page-size'|t}</span>-->
-            <!--<span class="caret"></span>-->
-          <!--</button>-->
-          <!--<ul class="dropdown-menu" role="menu">-->
-            <!--<li repeat.for="size of pageSizes"-->
-                <!--click.delegate="$parent.setSize(size)">${size}-->
-            <!--</li>-->
-          <!--</ul>-->
-        <!--</div>-->
-      <!--</div>-->
-    </form>
-  </nav>
+        <!--&lt;!&ndash; Sort actions &ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="btn-group sort-actions">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="dropdown">&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;Dropdown trigger&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<button type="button"&ndash;&gt;-->
+                    <!--&lt;!&ndash;name="sort"&ndash;&gt;-->
+                    <!--&lt;!&ndash;class="btn btn-default btn-sm dropdown-toggle sort-selector"&ndash;&gt;-->
+                    <!--&lt;!&ndash;data-toggle="dropdown">&ndash;&gt;-->
+              <!--&lt;!&ndash;<span class="selector-text">${'sort.' + options.sort|t | defaultValue:'sort.placeholder'|t}</span>&ndash;&gt;-->
+              <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash; Dropdown &ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<ul class="dropdown-menu" role="menu">&ndash;&gt;-->
+              <!--&lt;!&ndash;<li repeat.for="sortCol of sortColumns"&ndash;&gt;-->
+                  <!--&lt;!&ndash;click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}&ndash;&gt;-->
+              <!--&lt;!&ndash;</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash; Clear sort &ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}"&ndash;&gt;-->
+                  <!--&lt;!&ndash;title="Clear sort"&ndash;&gt;-->
+                  <!--&lt;!&ndash;name="clearSort"&ndash;&gt;-->
+                  <!--&lt;!&ndash;click.trigger="clearSort()">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="sw-icon-cancel"></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash; Change sort direction &ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}"&ndash;&gt;-->
+                  <!--&lt;!&ndash;name="toggleSortDirection"&ndash;&gt;-->
+                  <!--&lt;!&ndash;click.trigger="toggleSortDirection()">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;Stamp filter &ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="dropdown hidden-xs hidden-sm">&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;Stamp filter button&ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<button type="button"&ndash;&gt;-->
+                  <!--&lt;!&ndash;name="stampFilter"&ndash;&gt;-->
+                  <!--&lt;!&ndash;class="btn btn-default btn-sm dropdown-toggle"&ndash;&gt;-->
+                  <!--&lt;!&ndash;data-toggle="dropdown"&ndash;&gt;-->
+                  <!--&lt;!&ndash;aria-expanded="false">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="selector-text">${getFilterText(stampFilter)|t | defaultValue:'filters.filter'|t}</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash; Stamp filter dropdown &ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<ul class="dropdown-menu" role="menu">&ndash;&gt;-->
+            <!--&lt;!&ndash;<li repeat.for="filter of filters"&ndash;&gt;-->
+                <!--&lt;!&ndash;click.trigger="$parent.setFilter($index)">&ndash;&gt;-->
+              <!--&lt;!&ndash;${$parent.getFilterText(filter)|t}&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+          <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<div class="dropdown hidden-xs hidden-sm">&ndash;&gt;-->
+          <!--&lt;!&ndash;<button type="button"&ndash;&gt;-->
+                  <!--&lt;!&ndash;class="btn btn-default btn-sm dropdown-toggle"&ndash;&gt;-->
+                  <!--&lt;!&ndash;data-toggle="dropdown"&ndash;&gt;-->
+                  <!--&lt;!&ndash;aria-expanded="false">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="selector-text">${getFilterText(conditionFilter)|t |&ndash;&gt;-->
+              <!--&lt;!&ndash;defaultValue:'conditionFilters.ALL_STAMPS'|t}</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;<ul class="dropdown-menu" role="menu">&ndash;&gt;-->
+            <!--&lt;!&ndash;<li repeat.for="filter of conditionFilters"&ndash;&gt;-->
+                <!--&lt;!&ndash;click.trigger="$parent.setConditionFilter($index)">&ndash;&gt;-->
+              <!--&lt;!&ndash;${$parent.getFilterText(filter)|t}&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+          <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="dropdown hidden-xs hidden-sm">&ndash;&gt;-->
+          <!--&lt;!&ndash;<button type="button"&ndash;&gt;-->
+                  <!--&lt;!&ndash;class="btn btn-default btn-sm dropdown-toggle result-size-selector"&ndash;&gt;-->
+                  <!--&lt;!&ndash;data-toggle="dropdown">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="selector-text">${options.$top | defaultValue:'actions.page-size'|t}</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;<ul class="dropdown-menu" role="menu">&ndash;&gt;-->
+            <!--&lt;!&ndash;<li repeat.for="size of pageSizes"&ndash;&gt;-->
+                <!--&lt;!&ndash;click.delegate="$parent.setSize(size)">${size}&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+          <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</form>-->
+  <!--</nav>-->
 </template>

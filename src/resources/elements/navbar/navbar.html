@@ -1,0 +1,53 @@
+<template>
+  <require from="./navbar.css"></require>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top app-bar">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#collapsible-header">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!--Logo-->
+      <a class="navbar-brand" href="#">
+        <span class="app-icon-stampweb"></span>
+        <span>${router.title}</span>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="collapsible-header">
+      <ul class="nav navbar-nav">
+        <!-- Settings -->
+        <li>
+          <a route-href="route: settings">
+            <span class="hidden-xs sw-icon-settings" title="${'nav.settings' | t}"></span>
+            <span class="visible-xs"> ${'nav.settings'|t}</span>
+          </a>
+        </li>
+        <!-- Add all routes -->
+        <li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
+          <a href.bind="route.href">${route.title|t}</a>
+        </li>
+      </ul>
+
+      <!-- Other applications by drake -->
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation">
+          <a href="http://www.drakeserver.com/javaws/tools/stamp-imageparsing.jnlp" title="${'nav.image-burst'|t}">
+            <span class="hidden-xs sw-icon-imageburst"></span>
+            <span class="visible-xs">${'nav.image-burst'|t}</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="http://www.drakeserver.com/javaws/tools/stamp-pagegen.jnlp" title="${'nav.page-gen'|t}">
+            <span class="hidden-xs sw-icon-catalogue sw-icon-pagegen"></span>
+            <span class="visible-xs">${'nav.page-gen'|t}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</template>

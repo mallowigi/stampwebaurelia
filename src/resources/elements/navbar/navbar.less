@@ -1,0 +1,34 @@
+@import "../../../theme/variables";
+
+navbar {
+  nav {
+    z-index: 750;
+
+    .navbar-brand {
+      > span {
+        height: 28px;
+      }
+      span:last-child {
+        top: -1.5 * @padding-base-vertical;
+        position: relative;
+      }
+    }
+    .sw-icon-pagegen {
+      padding-right: 30px;
+    }
+
+    li.active {
+      a {
+        border-radius: 5px 5px 0 0;
+      }
+    }
+  }
+}
+
+.app-icon-stampweb {
+  background: url("/resources/images/stamp-web-64x64.png") no-repeat;
+  background-size: 28px 28px;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+}
