@@ -1,0 +1,29 @@
+@import "../../../theme/variables";
+@grid-nav-height: 55px;
+
+.quick-search.input-group {
+  input.form-control {
+    width: auto;
+  }
+}
+
+.sort-actions {
+  margin-right: 5px;
+
+  .dropdown {
+    float: left;
+  }
+
+  .sort-selector {
+    width: 150px;
+    text-align: left;
+    float: left;
+
+    border-radius: @border-radius-base 0 0 @border-radius-base;
+    .caret {
+      float: right;
+      top: 7px;
+      position: relative;
+    }
+  }
+}
