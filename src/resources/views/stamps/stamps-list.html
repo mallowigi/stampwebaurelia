@@ -1,6 +1,7 @@
 <template>
   <require from="./stamps-list.css"></require>
   <require from="../../attributes/find-target"></require>
+  <require from="../../elements/collapse-panel/collapse-panel"></require>
 
   <nav class="navbar navbar-default">
     <form class="navbar-form">
@@ -186,4 +187,14 @@
       <!--</div>-->
     </form>
   </nav>
+
+  <div class="container-fluid stamp-content">
+    <div class="row">
+      <div class="col-md-12 col-lg-4 sw-editor-container" if.bind="editorShown">
+        <collapse-panel collapsed.bind="!editorShown" name="stamp-list-editor-panel">
+Test
+        </collapse-panel>
+      </div>
+    </div>
+  </div>
 </template>

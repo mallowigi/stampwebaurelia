@@ -222,7 +222,7 @@ export class StampsList extends EventManaged {
         break;
     }
 
-    this.editorShown = true;
+    this.editorShown = !this.editorShown;
   }
 
   selectAll(select = false) {
